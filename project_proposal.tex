@@ -1,0 +1,31 @@
+    \documentclass[fontsize=11pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+
+\title{CSC111 Project Proposal: UofTScheduler}
+\author{Mouaid, Mogtaba, Wasee, Rayan}
+\date{Tuesday, March 16, 2021}
+
+\begin{document}
+\maketitle
+
+\section*{Brief Problem Description}
+A huge issue for many UofT students is time management.\footnote{“Time Management and Stress.” Time Management and Stress | Centre for Critical Development Studies, University of Toronto, www.utsc.utoronto.ca/ccds/time-management-and-stress. } Time management is critical in order to be able to compete in this merciless economy. To survive, one may utilize tools such as calendars to help keep track of future events. Students at the University of Toronto tend to have many assignments, homework, and tests which prevents them from finding extra time. To alleviate this problem one can enlist UofTScheduler to aide them. \textbf{To solve this issue, this projects aims to automate a busy UofT student's schedule}. After the schedule is created, it will be displayed in a visually friendly tree structure, allowing users to see exactly what they should be doing and when. By taking out the guesswork behind creating a schedule, a busy UofT student is able to create a meaningful schedule in seconds rather than wasting time and energy deciding what one should do and when, UofTScheduler can do this for them. When one does not have enough time to manually import all his calendar events into a traditional calendar/to-do list, one can instead opt to use UofTScheduler which allows the student to import many calendars at once. Users will also be able to manually add events, for when there is not already a pre-made calendar posted on course websites. The reasoning behind the creation of this program is to solve a problem many students face regularly. Creating schedules is often tiresome and aggravating after a long day of work, which is common in universities. By creating a program that takes a stress out of life, it allows the user to feel a little more at peace with themselves. By fixing the issue of having to spend a cumulative dozens of hours planning future events, this program can make the user feel as though that life is a little easier than it really is. One could patch this program so it extends to other universities, however the aim of this project is to focus on UofT students, due to the time constraints the scale of the project must be toned down. However, considering that the University of Toronto is one of the largest Universities in Canada, we know this program has to potential to impact a great deal of university students.
+
+
+\section*{Computational Plan}
+
+We will be creating an automated weekly schedule creator, using trees. In our implementation, we will be using a tree to represent the complete schedule. We will create a new data class called the week data class. The week data class will have the title of the schedule as a root value, and it will have seven subtrees each corresponding to a day of the week. Each of these subtrees will be a day data class, that has a string with the name of the day as its root value. In regards to the subtrees of the day data class, we chose a minimum increment of 30 minutes to be the smallest length for an event thus. Thus, each day data class will have 48 subtrees, where the root of each subtree corresponds to an event happening in that specific 30 minutes. The subtrees will be ordered from left to right corresponding to the time of the day,  where the leftmost subtree will correspond to the time slot 00:00 - 00:29 and the rightmost will correspond to 23:30 - 23:59. 
+The program will allow a student to upload different calendars in ics format and they will be converted to python usable data, wherefrom the data we will create modules for the week and day data classes to automatically assign the correct events to the correct time slots.
+We then provide the user with an input tab, where they input an event, its start time and date and its end time and date and the program will break the input into data that is used by our recursive functions to find the correct date and time and input the event in the right time-slot. This automated Schedule will not be static and if a person inputs a new event in place of an existing event a new schedule will be visualized, every time. 
+Then using the libraries Pygame and PyCairo we will take the data in the week tree and visualize a complete weekly schedule for the user. These libraries will allow us to use data and draw the weekly schedule in an attractive and efficient manner, and as they are quite flexible, it will allow the schedule to be visualized perfectly even as the data changes.
+
+\section*{Works Cited}
+
+“An Introduction to Cairo with Python.” Tutorial - Pycairo Documentation, pycairo.readthedocs.io/en/latest/tutorial.html. \\ \\
+“Pygame Front Page.” Pygame Front Page - Pygame v2.0.1.dev1 Documentation, www.pygame.org/docs/. \\
+\\ 
+“Time Management and Stress.” Time Management and Stress | Centre for Critical Development Studies, University of Toronto, www.utsc.utoronto.ca/ccds/time-management-and-stress. \\
+
+\end{document}
