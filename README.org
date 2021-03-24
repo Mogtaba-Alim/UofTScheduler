@@ -26,5 +26,5 @@ Day Data class = [Mou]
 
 ics:
 
-Conversion from ics to python and vice versa= [Wasee]
+Conversion from ics to python and vice versa= [Was]
 
