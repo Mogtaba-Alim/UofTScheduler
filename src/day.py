@@ -4,7 +4,7 @@ import tree
 
 
 class Day:
-    """ This class represents a single week in the schedule
+    """ This class represents a single day in the schedule
     This class uses recursive tree data structures to store information
     Private Instance Attributes:
         - _day: A tree with trees corresponding to the hours of the day
