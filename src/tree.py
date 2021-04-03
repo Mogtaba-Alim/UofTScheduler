@@ -1,8 +1,9 @@
+""" File with tree data class
+"""
 from __future__ import annotations
 
-import csv
 import random
-from typing import Any, Optional
+from typing import Any, Optional, List
 
 
 class Tree:
@@ -25,9 +26,9 @@ class Tree:
     #       may be empty when self._root is not None, which represents a tree consisting
     #       of just one item.
     _root: Optional[Any]
-    _subtrees: list[Tree]
+    _subtrees: List[Tree]
 
-    def __init__(self, root: Optional[Any], subtrees: list[Tree]) -> None:
+    def __init__(self, root: Optional[Any], subtrees: List[Tree]) -> None:
         """Initialize a new Tree with the given root value and subtrees.
 
         If root is None, the tree is empty.
@@ -146,99 +147,15 @@ class Tree:
             # in this tree.
             return False
 
-
-    def insert(self, item: Any) -> None:
-        """Insert the given item into this tree using the following algorithm.
-
-        1. If the tree is empty, make item the new root of the tree.
-        2. If the tree has a root but no subtrees, create a new subtree of this tree that
-           contains the item.
-        3. Otherwise, pick a random number between 1 and 3 inclusive.
-            - If the random number is 3, create a new subtree of this tree that contains
-              the item.
-            - If the random number is a 1 or 2, pick one of the existing
-              subtrees at random, and *recursively insert* the new item
-              into that subtree.
-
-        This exercise is meant to help you review the random module.
-        You'll find these two functions helpful:
-
-            - random.randint
-            - random.choice
-
-        >>> t = Tree(None, [])
-        >>> t.insert(1)
-        >>> 1 in t
-        True
-        >>> lt = Tree(2, [Tree(4, []), Tree(5, [])])
-        >>> rt = Tree(3, [Tree(6, []), Tree(7, []), Tree(8, []), Tree(9, []),\
-                          Tree(10, [])])
-        >>> t = Tree(1, [lt, rt])
-        >>> t.insert(100)
-        >>> t.__contains__(100)
-        True
+    def create_new_subtree(self, item: Any) -> None:
+        """Insert the given item into the tree's subtrees as a new subtree
         """
-        if self.is_empty():
-            self._root = item
-        elif self._subtrees == []:
-            self._subtrees.append(Tree(item, []))
-        else:
-            rand = random.randint(1, 3)
-            if rand == 3:
-                self._subtrees.append(Tree(item, []))
-            else:
-                subtree = random.choice(self._subtrees)
-                subtree.insert(item)
+        self._subtrees.append(Tree(item, []))
 
-    def insert_sequence(self, items: list) -> None:
-        """Insert the given items into this tree.
+    def add_new_subtree(self, subtree: Tree) -> None:
+        """ Adds an existing tree to the tree's subtrees"""
+        self._subtrees.append(subtree)
 
-        The inserted items form a chain of descendants, where:
-            - items[0] is a child of this tree's root
-            - items[1] is a child of items[0]
-            - items[2] is a child of items[1]
-            - etc.
-
-        Do nothing if items is empty.
-
-        Do not create duplicate items at the same depth; for example, if items[0] is already
-        a child of this tree's root, you should recurse into that existing subtree rather
-        than create a new subtree with items[0].
-        But if items[0] is not a child of this tree's root, create a new subtree for it
-        and append it to the existing list of subtrees.
-
-        Hint: to do this recursively, you'll need to recurse on both the tree argument
-        (from self to a subtree) AND on the given items, using the "first" and "rest" idea
-        from RecursiveLists. To access the "rest" of a built-in Python list, you can use
-        list slicing: items[1:len(items)], or simply items[1:].
-
-        Preconditions:
-            - not self.is_empty()
-
-        >>> t = Tree(111, [])
-        >>> t.insert_sequence([1, 2, 3])
-        >>> print(t)
-        111
-          1
-            2
-              3
-        <BLANKLINE>
-        >>> t.insert_sequence([1, 3, 5])
-        >>> print(t)
-        111
-          1
-            2
-              3
-            3
-              5
-        <BLANKLINE>
-        """
-        if items == []:
-            return None
-        elif self._subtrees == []:
-            self.insert(items[0])
-            items.remove(items[0])
-        else:
-            for subtree in self._subtrees:
-                subtree.insert(items[0])
-                subtree.insert_sequence([items[1:0]])
+    def return_root(self) -> str:
+        """ Return the root fo the current Tree"""
+        return self._root
