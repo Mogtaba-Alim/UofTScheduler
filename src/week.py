@@ -4,16 +4,17 @@ import day
 from typing import Optional, List, Any
 
 
-class Week(tree.Tree):
+class Week:
     """ This class representes a single week in the schedule
     This class uses recursive tree data structures to store information
     """
+    _week : List[day.Day]
 
-    def __init__(self, subtrees: List[tree.Tree], root: Optional[Any] = "Week") -> None:
-        super().__init__(root, subtrees)
+    def __init__(self) -> None:
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        self._week = []
         for i in range(7):
-            self.add_new_subtree(day.Day(days[i], []))
+            self._week.append(day.Day(days[i], []))
 
     def add_event_date(self, event_name: str, day_of_week: str, start_time: int, end_time: int,
                        importance: int) -> str:
@@ -27,7 +28,6 @@ class Week(tree.Tree):
             - start_time: The time of the day corresponding to the start time of the new event
             - end_time: The time of the day corresponding to the end time of the new event
         """
-        # for days in self._days:
-        #     if days.identify_day() == day_of_week:
+        for days in self._week:
 
 

@@ -21,7 +21,7 @@ class Day(tree.Tree):
 
     def identify_day(self) -> str:
         """Returns what the current day is"""
-        return self._day.return_root()
+        return self._root
 
     def insert_event(self, event_name: str, importance_level, start: int, end: int) -> str:
         """Insert a new event into this day"""

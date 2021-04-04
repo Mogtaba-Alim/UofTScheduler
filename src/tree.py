@@ -115,38 +115,6 @@ class Tree:
                 s += subtree._str_indented(depth + 1)
             return s
 
-    def remove(self, item: Any) -> bool:
-        """Delete *one* occurrence of the given item from this tree.
-
-        Do nothing if the item is not in this tree.
-        Return whether the given item was deleted.
-        """
-        if self.is_empty():
-            return False
-        elif self._root == item:
-            self._delete_root()  # delete the root
-            return True
-        else:
-            for subtree in self._subtrees:
-                deleted = subtree.remove(item)
-                if deleted and subtree.is_empty():
-                    # The item was deleted and the subtree is now empty.
-                    # We should remove the subtree from the list of subtrees.
-                    # Note that mutate a list while looping through it is
-                    # EXTREMELY DANGEROUS!
-                    # We are only doing it because we return immediately
-                    # afterwards, and so no more loop iterations occur.
-                    self._subtrees.remove(subtree)
-                    return True
-                elif deleted:
-                    # The item was deleted, and the subtree is not empty.
-                    return True
-
-            # If the loop doesn't return early, the item was not deleted from
-            # any of the subtrees. In this case, the item does not appear
-            # in this tree.
-            return False
-
     def create_new_subtree(self, item: Any) -> None:
         """Insert the given item into the tree's subtrees as a new subtree
         """
