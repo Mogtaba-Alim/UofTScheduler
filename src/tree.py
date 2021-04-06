@@ -127,3 +127,7 @@ class Tree:
     def return_root(self) -> str:
         """ Return the root fo the current Tree"""
         return self._root
+
+    def switch_event(self, event_time, event: str, importance: int):
+        """switch the given event """
+        self._root = (event_time, event, importance)
