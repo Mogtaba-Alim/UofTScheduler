@@ -8,7 +8,7 @@ class Week:
     """ This class representes a single week in the schedule
     This class uses recursive tree data structures to store information
     """
-    _week : List[day.Day]
+    _week: List[day.Day]
 
     def __init__(self) -> None:
         days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -39,23 +39,38 @@ class Week:
         remaining_events = []
         for days in self._week:
             if days.identify_day() == day_of_week:
-                remaining_events.extend(days.insert_event(event_name, importance, start_time,
-                                                          end_time))
+                remaining_events.extend(days.replace_event(event_name, importance, start_time,
+                                                           end_time))
         i = 0
         new_start = "0:00"
         new_end = "0:30"
+        if remaining_events == []:
+            return "Event successfully added"
+
         for new_days in self._week:
             while remaining_events != [] or i != 48:
+                event = remaining_events[0]
+                remaining_events.extend(new_days.insert_event(event[1], event[2], new_start,
+                                                              new_end))
+                if i % 2 == 0:
+                    new_start = new_start[:-3] + ":30"
+                    new_end = str(int(new_end[:-3]) + 1) + ":00"
+                else:
+                    new_start = str(int(new_start[:-3]) + 1) + ":00"
+                    new_end = new_end[:-3] + ":30"
 
+                i += 1
+            new_start = "0:00"
+            new_end = "0:30"
 
+        if remaining_events == []:
+            return "Event successfully added"
+        else:
+            return "There has been an error"
 
-
-
-
-
-
-
-
-
-
-
+    def __str__(self) -> None:
+        """ Prints the current schedule"""
+        s = ""
+        for days in self._week:
+            s += days._str_indented(0)
+        return s
