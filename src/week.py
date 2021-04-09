@@ -16,7 +16,7 @@ class Week:
         for i in range(7):
             self._week.append(day.Day(days[i], []))
 
-    def add_event_date(self, event_name: str, day_of_week: str, start_time: str, end_time: str,
+    def add_event_date(self, event_name: str, target_day: str, start_time: str, end_time: str,
                        importance: int) -> str:
         """ Adds an event to the specified time and date of the week. If the event slot is already
             filled the importance level of the current event and the new event are compared, if the
@@ -24,8 +24,8 @@ class Week:
             replace the current event and the current event will be moved to the next available
             time-slot. Otherwise the new event is placed in the next available time-slot.
             - event_name: The name of the new event
-            - day_of_week: A string corresponding to the day of the week of the new event
-            - start_time: The time of the day corresponding to the start time of the new event.- Its
+            - target_day: A string corresponding to the day of the week of the new event
+            - start_time: The time ofC the day corresponding to the start time of the new event.- Its
             format is a string looking like this: "18:00" or "3:30" with 30 minutes intervals
             - end_time: The time of the day corresponding to the end time of the new event. Its
             format is a string looking like this: "18:00" or "3:30" with 30 minutes intervals
@@ -34,39 +34,24 @@ class Week:
         Preconditions
             - 0 <= importance <= 3
             - int(start_time[:-3]) + int(start_time[-2:]) / 100 < \
-             int(end_time[:-3]) + int(end_time[-2:]) / 100
+            - int(end_time[:-3]) + int(end_time[-2:]) / 100
+            - target_day in {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+            'Saturday', 'Sunday'}
         """
-        remaining_events = []
-        for days in self._week:
-            if days.identify_day() == day_of_week:
-                remaining_events.extend(days.replace_event(event_name, importance, start_time,
-                                                           end_time))
-        i = 0
-        new_start = "0:00"
-        new_end = "0:30"
-        if remaining_events == []:
-            return "Event successfully added"
-
-        for new_days in self._week:
-            while remaining_events != [] or i != 48:
-                event = remaining_events[0]
-                remaining_events.extend(new_days.insert_event(event[1], event[2], new_start,
-                                                              new_end))
-                if i % 2 == 0:
-                    new_start = new_start[:-3] + ":30"
-                    new_end = str(int(new_end[:-3]) + 1) + ":00"
-                else:
-                    new_start = str(int(new_start[:-3]) + 1) + ":00"
-                    new_end = new_end[:-3] + ":30"
-
-                i += 1
-            new_start = "0:00"
-            new_end = "0:30"
-
-        if remaining_events == []:
-            return "Event successfully added"
-        else:
-            return "There has been an error"
+        for day in self._week:
+            # if we find our day then we can operate on it.
+            if target_day == day.identify_day():
+                # room for optimization, can use the half method
+                for hour in day._subtrees:
+                    # if its empty we can just add the event
+                    if hour.return_root()[1] == 'Empty':
+                        day.insert_event(event_name=event_name, start=start_time, end=end_time,
+                                         importance=importance)
+                    elif int(hour.return_root()[2]) < importance:
+                        day.replace_event(event_name=event_name, start=start_time, end=end_time,
+                                         importance=importance)
+                    else:
+                        return 'Invalid Operation'
 
     def __str__(self) -> None:
         """ Prints the current schedule"""

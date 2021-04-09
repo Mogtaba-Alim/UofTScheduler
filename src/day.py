@@ -36,10 +36,10 @@ class Day(tree.Tree):
             # breakpoint()
             curr_event_int = int(curr_event[0][:-3]) + int(curr_event[0][-2:]) / 100
             if start_int <= curr_event_int < end_int:
-                if importance > curr_event[2] and curr_event[1] != 'Empty':
+                if importance > int(curr_event[2]) and curr_event[1] != 'Empty':
                     replaced_events.append(curr_event)
                     hour.switch_event(curr_event[0], event_name, importance)
-                elif importance > curr_event[2] and curr_event[1] == 'Empty':
+                elif importance > int(curr_event[2]) and curr_event[1] == 'Empty':
                     hour.switch_event(curr_event[0], event_name, importance)
                 else:
                     replaced_events.insert(0, (curr_event[0], event_name, importance))
@@ -58,7 +58,7 @@ class Day(tree.Tree):
             # breakpoint()
             curr_event_int = int(curr_event[0][:-3]) + int(curr_event[0][-2:]) / 100
             if start_int <= curr_event_int < end_int:
-                if importance > curr_event[2] and curr_event[1] == 'Empty':
+                if importance > int(curr_event[2]) and curr_event[1] == 'Empty':
                     hour.switch_event(curr_event[0], event_name, importance)
                 else:
                     replaced_events.insert(0, (curr_event[0], event_name, importance))
