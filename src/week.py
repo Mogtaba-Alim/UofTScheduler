@@ -5,7 +5,7 @@ from typing import Optional, List, Any
 
 
 class Week:
-    """ This class representes a single week in the schedule
+    """ This class represents a single week in the schedule
     This class uses recursive tree data structures to store information
     """
     _week: List[day.Day]
@@ -49,7 +49,7 @@ class Week:
                                          importance=importance)
                     elif int(hour.return_root()[2]) < importance:
                         day.replace_event(event_name=event_name, start=start_time, end=end_time,
-                                         importance=importance)
+                                          importance=importance)
                     else:
                         return 'Invalid Operation'
 
