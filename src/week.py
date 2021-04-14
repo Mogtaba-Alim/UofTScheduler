@@ -2,6 +2,7 @@
 import tree
 import day
 from typing import Optional, List, Any
+import pickle
 
 
 class Week:
@@ -17,7 +18,7 @@ class Week:
             self._week.append(day.Day(days[i], []))
 
     def add_event_date(self, event_name: str, target_day: str, start_time: str, end_time: str,
-                       importance: int) -> str:
+                       importance: int, user_row: int) -> str:
         """ Adds an event to the specified time and date of the week. If the event slot is already
             filled the importance level of the current event and the new event are compared, if the
             importance level of the new event is higher than the current event the new event will
@@ -48,21 +49,38 @@ class Week:
                 # displaced events
                 remaining_events.extend(days.replace_event(event_name, importance, start_time,
                                                            end_time))
+        # new_start = "0:00"
+        # new_end = "0:30"        if remaining_events == []:
+        # new_end = "0:30"        if remaining_events == []:
+        #             return "Event successfully added"
 
-        removed = []
         # iterate through the remaining events
         for event in remaining_events:
             # check for the next available slot in each day
             for new_days in self._week[days_to_index[target_day]:]:
                 # inserts into next available slot
                 if new_days.insert_event(event[1], event[2]):
-                    removed.append(event)
                     break
                 else:
                     continue
+                    # # setting the times
+                    # if i % 2 == 0:
+                    #     new_start = new_start[:-3] + ":30"
+                    #     new_end = str(int(new_end[:-3]) + 1) + ":00"
+                    # else:
+                    #     new_start = str(int(new_start[:-3]) + 1) + ":00"
+                    #     new_end = new_end[:-3] + ":30"
+                # increment the time slot
+            # # reset the times
+            # new_start = "0:00"
+            # new_end = "0:30"
+        if remaining_events == []:
+            "Event successfully added"
+            with open('my_trees.pickle') as file:
+                for i in range(0, user_row - 1):
+                    pickle.load(file)
+                # now we're on the pickle row
 
-        if remaining_events == removed:
-            return "Event successfully added"
         else:
             return "Current week full"
 
