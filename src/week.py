@@ -5,7 +5,7 @@ from typing import Optional, List, Any
 
 
 class Week:
-    """ This class represents a single week in the schedule
+    """ This class representes a single week in the schedule
     This class uses recursive tree data structures to store information
     """
     _week: List[day.Day]
@@ -38,22 +38,48 @@ class Week:
             - target_day in {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
             'Saturday', 'Sunday'}
         """
-        for day in self._week:
-            # if we find our day then we can operate on it.
-            if target_day == day.identify_day():
-                # room for optimization, can use the half method
-                for hour in day._subtrees:
-                    # if its empty we can just add the event
-                    if hour.return_root()[1] == 'Empty':
-                        day.insert_event(event_name=event_name, start=start_time, end=end_time,
-                                         importance=importance)
-                    elif int(hour.return_root()[2]) < importance:
-                        day.replace_event(event_name=event_name, start=start_time, end=end_time,
-                                          importance=importance)
-                    else:
-                        return 'Invalid Operation'
+        days_to_index = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4,
+                         'Saturday': 5, 'Sunday': 6}
 
-    def __str__(self) -> None:
+        remaining_events = []
+        for days in self._week:
+            if days.identify_day() == target_day:
+                # Replaces events that meet the importance criteria and returns un-added or
+                # displaced events
+                remaining_events.extend(days.replace_event(event_name, importance, start_time,
+                                                           end_time))
+        # new_start = "0:00"
+        # new_end = "0:30"        if remaining_events == []:
+        # new_end = "0:30"        if remaining_events == []:
+        #             return "Event successfully added"
+
+        # iterate through the remaining events
+        for event in remaining_events:
+            # check for the next available slot in each day
+            for new_days in self._week[days_to_index[target_day]:]:
+                # inserts into next available slot
+                if new_days.insert_event(event[1], event[2]):
+                    break
+                else:
+                    continue
+                    # # setting the times
+                    # if i % 2 == 0:
+                    #     new_start = new_start[:-3] + ":30"
+                    #     new_end = str(int(new_end[:-3]) + 1) + ":00"
+                    # else:
+                    #     new_start = str(int(new_start[:-3]) + 1) + ":00"
+                    #     new_end = new_end[:-3] + ":30"
+                # increment the time slot
+            # # reset the times
+            # new_start = "0:00"
+            # new_end = "0:30"
+        if remaining_events == []:
+            "Event successfully added"
+        else:
+            return "Current week full"
+
+
+    def __str__(self) -> str:
         """ Prints the current schedule"""
         s = ""
         for days in self._week:

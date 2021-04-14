@@ -46,21 +46,12 @@ class Day(tree.Tree):
 
         return replaced_events
 
-    def insert_event(self, event_name: str, importance: int, start: str, end: str) -> list:
+    def insert_event(self, event_name: str, importance: int) -> bool:
         """Insert a new event into this day and return the list of the replaced or not added
          events. Similar to replace_event except it only inserts an event at an empty time-slot"""
-        start_int = int(start[:-3]) + int(start[-2:]) / 100
-        end_int = int(end[:-3]) + int(end[-2:]) / 100
-        # List of events that have been replaced or new events that were not inserted
-        replaced_events = []
         for hour in self._subtrees:
             curr_event = hour.return_root()
-            # breakpoint()
-            curr_event_int = int(curr_event[0][:-3]) + int(curr_event[0][-2:]) / 100
-            if start_int <= curr_event_int < end_int:
-                if importance > int(curr_event[2]) and curr_event[1] == 'Empty':
-                    hour.switch_event(curr_event[0], event_name, importance)
-                else:
-                    replaced_events.insert(0, (curr_event[0], event_name, importance))
-
-        return replaced_events
+            if curr_event[1] == 'Empty':
+                hour.switch_event(curr_event[0], event_name, importance)
+                return True
+        return False
