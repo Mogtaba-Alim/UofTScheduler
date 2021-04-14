@@ -48,36 +48,23 @@ class Week:
                 # displaced events
                 remaining_events.extend(days.replace_event(event_name, importance, start_time,
                                                            end_time))
-        # new_start = "0:00"
-        # new_end = "0:30"        if remaining_events == []:
-        # new_end = "0:30"        if remaining_events == []:
-        #             return "Event successfully added"
 
+        removed = []
         # iterate through the remaining events
         for event in remaining_events:
             # check for the next available slot in each day
             for new_days in self._week[days_to_index[target_day]:]:
                 # inserts into next available slot
                 if new_days.insert_event(event[1], event[2]):
+                    removed.append(event)
                     break
                 else:
                     continue
-                    # # setting the times
-                    # if i % 2 == 0:
-                    #     new_start = new_start[:-3] + ":30"
-                    #     new_end = str(int(new_end[:-3]) + 1) + ":00"
-                    # else:
-                    #     new_start = str(int(new_start[:-3]) + 1) + ":00"
-                    #     new_end = new_end[:-3] + ":30"
-                # increment the time slot
-            # # reset the times
-            # new_start = "0:00"
-            # new_end = "0:30"
-        if remaining_events == []:
-            "Event successfully added"
+
+        if remaining_events == removed:
+            return "Event successfully added"
         else:
             return "Current week full"
-
 
     def __str__(self) -> str:
         """ Prints the current schedule"""
