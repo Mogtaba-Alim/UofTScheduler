@@ -4,16 +4,6 @@ from typing import Any
 import pickle
 from week import Week
 
-
-def pickle_loader(pkl_file) -> Any:
-    """load pickle files"""
-    try:
-        while True:
-            yield pickle.load(pkl_file)
-    except EOFError:
-        pass
-
-
 if __name__ == '__main__':
     acc_creation = input('Create Account? (y/n)')
     users_to_pickle = {}
@@ -30,10 +20,11 @@ if __name__ == '__main__':
             for row in csv_reader:
                 if user == row[0] and password == row[1]:
                     found_user = True
-                    # Generate their schedule
                     break
             if found_user:
-                print(f'Welcome {user}')
+                schedule = pickle.load(open(f'{user}.pickle', "rb"))
+                print(f'Welcome {user} \n type print(schedule) to view your schedule \n schedule. '
+                      f'to see the operations you can do')
             else:
                 print('user/pass combination not found')
 
@@ -42,22 +33,9 @@ if __name__ == '__main__':
         user = input("Username: ")
         password = input("Password: ")
         schedule = Week()
-        with open('user_pass.csv', 'w') as file:
+        with open('user_pass.csv', 'a+', newline='') as file:
             csv_writer = csv.writer(file)
             csv_writer.writerow([user, password])
-            file = open('my_trees.pickle', 'wb')
+            file = open(f'{user}.pickle', 'wb')
             pickle.dump(schedule, file)
-
-        with open('my_trees.pickle') as f:
-            csv_reader = csv.reader('user_pass.csv')
-            next(csv_reader)
-            for event in pickle_loader(f):
-                users_to_pickle[user] = event
-                next(csv_reader)
-
-
-
-
-
-
-
+            file.close()
