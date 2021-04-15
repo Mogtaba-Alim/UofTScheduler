@@ -18,7 +18,7 @@ class Week:
             self._week.append(day.Day(days[i], []))
 
     def add_event_date(self, event_name: str, target_day: str, start_time: str, end_time: str,
-                       importance: int, user_row: int) -> str:
+                       importance: int, user: str) -> str:
         """ Adds an event to the specified time and date of the week. If the event slot is already
             filled the importance level of the current event and the new event are compared, if the
             importance level of the new event is higher than the current event the new event will
@@ -63,24 +63,10 @@ class Week:
                     break
                 else:
                     continue
-                    # # setting the times
-                    # if i % 2 == 0:
-                    #     new_start = new_start[:-3] + ":30"
-                    #     new_end = str(int(new_end[:-3]) + 1) + ":00"
-                    # else:
-                    #     new_start = str(int(new_start[:-3]) + 1) + ":00"
-                    #     new_end = new_end[:-3] + ":30"
-                # increment the time slot
-            # # reset the times
-            # new_start = "0:00"
-            # new_end = "0:30"
         if remaining_events == []:
             "Event successfully added"
-            with open('my_trees.pickle') as file:
-                for i in range(0, user_row - 1):
-                    pickle.load(file)
-                # now we're on the pickle row
-
+            file = open(f'{user}.pickle', 'wb')
+            pickle.dump(self, file)
         else:
             return "Current week full"
 
