@@ -70,14 +70,6 @@ class Week:
         else:
             return "Current week full"
 
-    def get_days(self) -> List[day]:
-        """return the days list of this Week"""
-        days_list = []
-        for days in self._week:
-            days_list.append(days)
-
-        return days_list
-
     def __str__(self) -> str:
         """ Prints the current schedule"""
         s = ""

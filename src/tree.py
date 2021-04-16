@@ -115,6 +115,14 @@ class Tree:
                 s += subtree._str_indented(depth + 1)
             return s
 
+    def get_subtree(self) -> list:
+        """Return the subtrees of this day"""
+        subtrees = []
+        for time in self._subtrees:
+            subtrees.append(time)
+
+        return subtrees
+
     def create_new_subtree(self, item: Any) -> None:
         """Insert the given item into the tree's subtrees as a new subtree
         """
