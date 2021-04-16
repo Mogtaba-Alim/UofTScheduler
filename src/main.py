@@ -1,12 +1,13 @@
 """ The main file where our program runs"""
 import csv
-# from typing import Any
 import pickle
 from week import Week
+import uoft_event_finder
 
-if __name__ == '__main__':
-    acc_creation = input('Would You Like To Create An Account? (y/n)')
-    users_to_pickle = {}
+
+def main() -> any:
+    """ Calls all our files"""
+    acc_creation = input('Create Account? (y/n)')
 
     if acc_creation == 'n':
         print("Welcome! Please enter your login")
@@ -22,12 +23,18 @@ if __name__ == '__main__':
                     found_user = True
                     break
             if found_user:
+                global schedule
                 schedule = pickle.load(open(f'{user}.pickle', "rb"))
                 print(f'Welcome {user} \n  \
                     Please type print(schedule) to view your schedule \n \
                     schedule.f to see the operations you can do')
             else:
                 print('username/password combination you entered can not found')
+                print('user/pass combination not found')
+                print("#####################################")
+                print("Retrying")
+                print("#####################################")
+                main()
 
     else:
         print("Welcome! Please create your account")
@@ -40,7 +47,10 @@ if __name__ == '__main__':
             file = open(f'{user}.pickle', 'wb')
             pickle.dump(schedule, file)
             file.close()
-        print('Please rerun the program and log in')
 
-    # os.chdir("../src/reddit")
-    # os.system("scrapy crawl all")
+        print("Account Created \n Please restart to login")
+
+
+
+if __name__ == '__main__':
+    main()
