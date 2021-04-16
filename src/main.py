@@ -39,6 +39,7 @@ if __name__ == '__main__':
             file = open(f'{user}.pickle', 'wb')
             pickle.dump(schedule, file)
             file.close()
+        print('Please rerun the program and log in')
 
     # os.chdir("../src/reddit")
     # os.system("scrapy crawl all")
