@@ -4,21 +4,35 @@ https://pip.pypa.io/en/stable/installing/
 
 # Graphics and data visualization
 pygame==2.0.1
-pip install pygame
+
 
 # Using ics files
 ics==0.7
-$ pip install ics
+
 
 # Create Accounts
 pickle-mixin==1.0.2
-$ pip install pickle-mixin
+
 
 # web_scraper
 beautifulsoup4~=4.9.3
 https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-$ pip install beautifulsoup4
+
 
 future~=0.18.2
 requests~=2.22.0
 
+# if beautiful soup isntall doesnt work
+$ pip install beautifulsoup4
+
+# if pickle install doesnt work
+$ pip install pickle-mixin
+
+# if ics install doesnt work
+$ pip install ics
+
+# if pygame install doesnt work
+pip install pygame
+
+# if pip install doesnt work run get-pip.py
+# and follow these instructions https://pip.pypa.io/en/stable/installing/
