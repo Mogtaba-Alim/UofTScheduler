@@ -67,7 +67,7 @@ def main() -> any:
             pickle.dump(schedule, file)
             file.close()
 
-        print("Account Created \n Please restart file to login")
+        print("Account Created \n Please rerun main.py file to login")
 
 
 if __name__ == '__main__':
