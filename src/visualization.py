@@ -13,7 +13,7 @@ def initialize_screen(allowed: list) -> pygame.Surface:
     """
     pygame.display.init()
     pygame.font.init()
-    screen = pygame.display.set_mode((1000, 1000))
+    screen = pygame.display.set_mode((800, 700))
     screen.fill(THECOLORS['white'])
     pygame.display.flip()
 
@@ -36,7 +36,7 @@ def draw_text(screen: pygame.Surface, text: str, pos: tuple[int, int]) -> None:
                 pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
 
 
-def draw_grid(screen: pygame.Surface) -> None:
+def draw_grid(screen: pygame.surface) -> None:
     """Draws a square grid on the given surface.
 
     The drawn grid has GRID_SIZE columns and rows.
@@ -45,14 +45,27 @@ def draw_grid(screen: pygame.Surface) -> None:
     color = THECOLORS['grey']
     width, height = screen.get_size()
 
-    for col in range(1, ):
+    for col in range(1, 8):
         x = col * (width // 8)
         pygame.draw.line(screen, color, (x, 0), (x, height))
 
-    for row in range(1, 8):
-        y = row * (height // 8)
-        pygame.draw.line(screen, color, (0, y), (width, y))
+    for row in range(1, 49):
+        if row == 1:
+            y = (row * (height // 49)) + 10
+            pygame.draw.line(screen, color, (0, y), (width, y))
+        else:
+            y = (row * (height // 49)) + 10
+            first_column_width = width // 8
+            pygame.draw.line(screen, color, (first_column_width, y), (width, y))
+
+    pygame.display.flip()
+    pygame.event.wait()
+    pygame.display.quit()
 
 
-def draw_schedule(screen: pygame.surface, Schedule: Week) -> None:
+def draw_schedule(Schedule: Week) -> None:
     """create the final schedule"""
+    screen = initialize_screen([])
+
+    for days in Schedule.get_days():
+        for
