@@ -41,5 +41,5 @@ if __name__ == '__main__':
             pickle.dump(schedule, file)
             file.close()
 
-    os.chdir("../src/reddit")
-    os.system("scrapy crawl all")
+    # os.chdir("../src/reddit")
+    # os.system("scrapy crawl all")
