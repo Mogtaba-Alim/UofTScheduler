@@ -5,7 +5,7 @@ import pickle
 from week import Week
 
 if __name__ == '__main__':
-    acc_creation = input('Create Account? (y/n)')
+    acc_creation = input('Would You Like To Create An Account? (y/n)')
     users_to_pickle = {}
 
     if acc_creation == 'n':
@@ -23,10 +23,11 @@ if __name__ == '__main__':
                     break
             if found_user:
                 schedule = pickle.load(open(f'{user}.pickle', "rb"))
-                print(f'Welcome {user} \n type print(schedule) to view your schedule \n schedule. '
-                      f'to see the operations you can do')
+                print(f'Welcome {user} \n  \
+                    Please type print(schedule) to view your schedule \n \
+                    schedule.f to see the operations you can do')
             else:
-                print('user/pass combination not found')
+                print('username/password combination you entered can not found')
 
     else:
         print("Welcome! Please create your account")
