@@ -4,7 +4,6 @@ from typing import List
 import pickle
 from ics import Calendar, Event
 import datetime
-import visualization
 
 
 class Week:
@@ -159,7 +158,4 @@ class Week:
 
                     with open(ics_name, 'w') as my_file:
                         my_file.writelines(c)
-    
-    def visualize(self) -> None:
-        visualization.visualize(self)
         
