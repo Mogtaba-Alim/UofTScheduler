@@ -64,15 +64,38 @@ class Week:
                 else:
                     continue
         if remaining_events == []:
-            "Event successfully added"
+            print("Event successfully added")
             file = open(f'{user}.pickle', 'wb')
             pickle.dump(self, file)
         else:
             return "Current week full"
 
+    def remove_event_date(self, event_name: str, target_day: str, start_time: str, end_time: str,
+                          user: str):
+        """
+        Removes an event from the specified time of the week on the specific day.
+            - event_name: The name of the event to be removed
+            - target_day: A string corresponding to the day of the week of the removed event
+            - start_time: The time of the day corresponding to the start time of the removed event.
+              Its format is a string looking like this: "18:00" or "3:30" with 30 minutes intervals
+            - end_time: The time of the day corresponding to the end time of the removed event. Its
+              format is a string looking like this: "18:00" or "3:30" with 30 minutes intervals
+        Preconditions
+            - int(start_time[:-3]) + int(start_time[-2:]) / 100 < \
+            - int(end_time[:-3]) + int(end_time[-2:]) / 100
+            - target_day in {'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+            'Saturday', 'Sunday'}
+        """
+        for days in self._week:
+            if days.identify_day() == target_day:
+                days.remove_event(event_name, start_time, end_time)
+                print("Event successfully removed")
+                file = open(f'{user}.pickle', 'wb')
+                pickle.dump(self, file)
+
     def __str__(self) -> str:
         """ Prints the current schedule"""
         s = ""
         for days in self._week:
-            s += days._str_indented(0)
+            s += days.day_str_indented(0)
         return s

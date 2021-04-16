@@ -1,8 +1,9 @@
 """ The main file where our program runs"""
 import csv
-from typing import Any
+# from typing import Any
 import pickle
 from week import Week
+import os
 
 if __name__ == '__main__':
     acc_creation = input('Create Account? (y/n)')
@@ -39,3 +40,6 @@ if __name__ == '__main__':
             file = open(f'{user}.pickle', 'wb')
             pickle.dump(schedule, file)
             file.close()
+
+    os.chdir("../src/reddit")
+    os.system("scrapy crawl all")
