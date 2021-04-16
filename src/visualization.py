@@ -30,24 +30,44 @@ def draw_one_day_text(screen: pygame.Surface, day: Day, starting_width: Union[in
     pos represents the *upper-left corner* of the text.
     """
     for i in range(len(day.get_subtree())):
-        if day.get_subtree()[i][1] == "Empty":
+        event = day.get_subtree()[i].return_root()[1]
+        if event == "Empty":
             pass
-        elif day.get_subtree()[i][0] == '0:00':
-            font = pygame.font.SysFont('inconsolata', 12)
-            text_surface = font.render(day.get_subtree()[i][1], True, THECOLORS['black'])
-            width, height = text_surface.get_size()
-            increment_height = screen.get_size()[1]
-            pos = (starting_width + 5, (increment_height // 49) * 48)
-            screen.blit(text_surface,
-                        pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
+        elif len(event) >= 19:
+            event = event[:18]
+            if event == '0:00':
+                font = pygame.font.SysFont('inconsolata', 15)
+                text_surface = font.render(event, True, THECOLORS['black'])
+                width, height = text_surface.get_size()
+                increment_height = screen.get_size()[1]
+                pos = (starting_width + 5, (increment_height // 49) * 48)
+                screen.blit(text_surface,
+                            pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
+            else:
+                font = pygame.font.SysFont('inconsolata', 15)
+                text_surface = font.render(event, True, THECOLORS['black'])
+                width, height = text_surface.get_size()
+                increment_height = screen.get_size()[1]
+                pos = (starting_width + 5, (i * (increment_height // 49)) + 12)
+                screen.blit(text_surface,
+                            pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
         else:
-            font = pygame.font.SysFont('inconsolata', 12)
-            text_surface = font.render(day.get_subtree()[i][1], True, THECOLORS['black'])
-            width, height = text_surface.get_size()
-            increment_height = screen.get_size()[1]
-            pos = (starting_width + 5, (i * (height // 49)) + 12)
-            screen.blit(text_surface,
-                        pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
+            if event == '0:00':
+                font = pygame.font.SysFont('inconsolata', 15)
+                text_surface = font.render(event, True, THECOLORS['black'])
+                width, height = text_surface.get_size()
+                increment_height = screen.get_size()[1]
+                pos = (starting_width + 5, (increment_height // 49) * 48)
+                screen.blit(text_surface,
+                            pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
+            else:
+                font = pygame.font.SysFont('inconsolata', 15)
+                text_surface = font.render(event, True, THECOLORS['black'])
+                width, height = text_surface.get_size()
+                increment_height = screen.get_size()[1]
+                pos = (starting_width + 5, (i * (increment_height // 49)) + 12)
+                screen.blit(text_surface,
+                            pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
 
 
 def draw_time_slots(screen: pygame.Surface) -> None:
@@ -89,13 +109,12 @@ def draw_headings(screen: pygame.Surface) -> None:
                         pygame.Rect(pos, (pos[0] + width, pos[1] + height)))
 
 
-def draw_grid() -> None:
+def draw_grid(screen: pygame.surface) -> None:
     """Draws a square grid on the given surface.
 
     The drawn grid has GRID_SIZE columns and rows.
     You can use this to help you check whether you are drawing nodes and edges in the right spots.
     """
-    screen = initialize_screen([])
     color = THECOLORS['grey']
     width, height = screen.get_size()
 
@@ -113,17 +132,34 @@ def draw_grid() -> None:
         else:
             pygame.draw.line(screen, color, (50, y), (width, y))
 
-    draw_time_slots(screen)
+
+def draw_schedule(screen: pygame.surface, schedule: Week) -> None:
+    """create the final schedule"""
+    draw_grid(screen)
     draw_headings(screen)
+    draw_time_slots(screen)
+    width_increment = (screen.get_size()[1] // 7)
+    increment_multiplier = 0
+    for days in schedule.get_days():
+        width = (width_increment * increment_multiplier) + 50
+        draw_one_day_text(screen, days, width)
 
-    pygame.display.flip()
-    pygame.event.wait()
+
+def visualize(schedule: Week) -> None:
+    """Visualize the final schedule"""
+    # Initialize the screen
+    screen = initialize_screen([])
+
+    while True:
+        # Draw the list (on a pale turquoise background)
+        screen.fill(THECOLORS['paleturquoise1'])
+        draw_schedule(screen, schedule)
+        pygame.display.flip()
+
+        # Wait for an event (pygame.QUIT)
+        event = pygame.event.wait()
+
+        if event.type == pygame.QUIT:
+            break
+
     pygame.display.quit()
-
-
-# def draw_schedule(schedule: Week) -> None:
-#     """create the final schedule"""
-#     screen = initialize_screen([])
-#
-#     for days in schedule._week:
-#         for time in days.get_subtree():

@@ -1,9 +1,7 @@
 """ This is where the week class is implemented"""
-import tree
 import day
-from typing import Optional, List, Any
+from typing import List
 import pickle
-# import file_handler
 from ics import Calendar, Event
 import datetime
 
@@ -103,6 +101,14 @@ class Week:
             s += days.day_str_indented(0)
         return s
 
+    def get_days(self) -> list:
+        """Returns the list of day classes in the week """
+        days = []
+        for day in self._week:
+            days.append(day
+                        )
+        return days
+
     def read_tree_and_conv(self, day: str, time: str, ics_name: str):
         """this """
         c = Calendar()
@@ -117,7 +123,7 @@ class Week:
         curr_day = days[day]
 
         for days in self._week:
-            for subtree in days._subtrees:
+            for subtree in days.get_subtree():
                 if subtree.return_root()[1] != 'Empty':
                     time = subtree.return_root()[0]
                     name = subtree.return_root()[1]
