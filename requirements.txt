@@ -1,0 +1,15 @@
+# Installations
+pip==20.2.3
+
+# Graphics and data visualization
+pygame==2.0.1
+
+# Using ics files
+ics==0.7
+
+# Create Accounts 
+pickle-mixin==1.0.2
+
+# web_scraper
+Beautiful Soup 4
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/
