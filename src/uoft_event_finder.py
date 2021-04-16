@@ -6,7 +6,8 @@ import requests
 from bs4 import BeautifulSoup
 import pprint
 
-def find_events() -> None:
+
+def find_uoft_events() -> None:
     """Uses webscraping to find upcoming events at U of T"""
     url = 'https://www.utoronto.ca/events'
     reqs = requests.get(url)

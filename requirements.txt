@@ -7,7 +7,7 @@ pygame==2.0.1
 # Using ics files
 ics==0.7
 
-# Create Accounts 
+# Create Accounts
 pickle-mixin==1.0.2
 
 # web_scraper

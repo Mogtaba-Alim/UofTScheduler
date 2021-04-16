@@ -50,12 +50,6 @@ class Week:
                 # displaced events
                 remaining_events.extend(days.replace_event(event_name, importance, start_time,
                                                            end_time))
-        # new_start = "0:00"
-        # new_end = "0:30"        if remaining_events == []:
-        # new_end = "0:30"        if remaining_events == []:
-        #             return "Event successfully added"
-
-        # iterate through the remaining events
         for event in remaining_events:
             # check for the next available slot in each day
             for new_days in self._week[days_to_index[target_day]:]:
@@ -109,11 +103,11 @@ class Week:
                         )
         return days
 
-    def read_tree_and_conv(self, day: str, time: str, ics_name: str):
+    def read_tree_and_conv_to_ics(self, day: str, time: str, ics_file_name: str):
         """this """
         c = Calendar()
         e = Event()
-        
+
         # line 121 - 124:
         # https://stackoverflow.com/questions/17277002/how-to-get-all-datetime-
         # instances-of-the-current-week-given-a-day
@@ -159,6 +153,5 @@ class Week:
                     e.end = date + ' ' + time2
                     c.events.add(e)
 
-                    with open(ics_name, 'w') as my_file:
+                    with open(ics_file_name, 'w') as my_file:
                         my_file.writelines(c)
-        
