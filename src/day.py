@@ -27,6 +27,7 @@ class Day(tree.Tree):
     def replace_event(self, event_name: str, importance: int, start: str, end: str) -> list:
         """Insert a new event into this day and return the list of the replaced or not added
          events"""
+        # The start and end times using integer representation for comparison
         start_int = int(start[:-3]) + int(start[-2:]) / 100
         end_int = int(end[:-3]) + int(end[-2:]) / 100
         # List of events that have been replaced or new events that were not inserted
@@ -55,3 +56,21 @@ class Day(tree.Tree):
                 hour.switch_event(curr_event[0], event_name, importance)
                 return True
         return False
+
+    def remove_event(self, event_name: str, start: str, end: str) -> None:
+        """ Remove an event from this day and replace it with an empty slot"""
+        # The start and end times using integer representation for comparison
+        start_int = int(start[:-3]) + int(start[-2:]) / 100
+        end_int = int(end[:-3]) + int(end[-2:]) / 100
+        for hour in self._subtrees:
+            curr_event = hour.return_root()
+
+            curr_event_int = int(curr_event[0][:-3]) + int(curr_event[0][-2:]) / 100
+            if curr_event[0] == event_name and start_int <= curr_event_int < end_int:
+                hour.switch_event('Empty', start, 0)
+
+    def day_str_indented(self, depth: int) -> str:
+        """
+        Returns the string representation of the Day class but indented.
+        """
+        return self._str_indented(depth)
