@@ -114,7 +114,10 @@ class Week:
         c = Calendar()
         e = Event()
         
-        # line 117 - 121: https://stackoverflow.com/questions/17277002/how-to-get-all-datetime-instances-of-the-current-week-given-a-day
+        # line 121 - 124:
+        # https://stackoverflow.com/questions/17277002/how-to-get-all-datetime-
+        # instances-of-the-current-week-given-a-day
+        # Sorry, you will have to backspace, this source is also available in the project proposal.
         today = datetime.datetime.today()
         day_of_week = today.isocalendar()[2] - 1
         start_date = today - datetime.timedelta(days=day_of_week)
