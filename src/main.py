@@ -3,7 +3,6 @@ import csv
 # from typing import Any
 import pickle
 from week import Week
-import os
 
 if __name__ == '__main__':
     acc_creation = input('Create Account? (y/n)')

@@ -3,6 +3,9 @@ import tree
 import day
 from typing import Optional, List, Any
 import pickle
+# import file_handler
+from ics import Calendar, Event
+import datetime
 
 
 class Week:
@@ -99,3 +102,52 @@ class Week:
         for days in self._week:
             s += days.day_str_indented(0)
         return s
+
+    def read_tree_and_conv(self, day: str, time: str, ics_name: str):
+        """this """
+        c = Calendar()
+        e = Event()
+
+        today = datetime.datetime.today()
+        day_of_week = today.isocalendar()[2] - 1
+        start_date = today - datetime.timedelta(days=day_of_week)
+        dates = [start_date + datetime.timedelta(days=i) for i in range(7)]
+        days = {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4,
+                'Saturday': 5, 'Sunday': 6}
+        curr_day = days[day]
+
+        for days in self._week:
+            for subtree in days._subtrees:
+                if subtree.return_root()[1] != 'Empty':
+                    time = subtree.return_root()[0]
+                    name = subtree.return_root()[1]
+                    e.name = name
+                    month = str(dates[curr_day].month)
+                    day = str(dates[curr_day].day)
+
+                    if len(month) == 1:
+                        month = '0' + month
+                    if len(day) == 1:
+                        day = '0' + day
+
+                    date = str(dates[curr_day].year) + '-' + month + '-' + day
+                    if len(time) == 5:
+                        time = time + ':00'
+                    else:
+                        time = "0" + time + ":00"
+
+                    e.begin = date + ' ' + time
+                    time2 = time
+                    if time2[-6:-3] == ':00':
+                        time2 = time[0:-6] + ':30:00'
+                    else:
+                        time2 = str(int(time[0:2]) + 1) + ":" + '00:00'
+
+                    if len(time2) == 7:
+                        time2 = '0' + time2
+
+                    e.end = date + ' ' + time2
+                    c.events.add(e)
+
+                    with open(ics_name, 'w') as my_file:
+                        my_file.writelines(c)
